@@ -610,29 +610,52 @@ h1 {
   z-index: 0;
 }
 
-.music-toggle {
+.music-controls {
   position: fixed;
   top: 18px;
   right: 18px;
   z-index: 50;
-  width: 52px;
-  height: 52px;
-  border: none;
-  border-radius: 50%;
-  background: var(--accent);
-  color: #b14f71;
-  font-size: 1.2rem;
-  cursor: pointer;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(10px);
-  transition:
-    transform 0.2s ease,
-    background 0.2s ease,
-    box-shadow 0.2s ease;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(184, 102, 131, 0.16);
+  backdrop-filter: blur(12px);
+  padding: 10px 14px;
 }
 
-.music-toggle:hover {
-  transform: scale(1.05);
+.music-toggle,
+.music-btn {
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: transform 0.2s ease;
+}
+
+.music-toggle:hover,
+.music-btn:hover {
+  transform: scale(1.1);
+}
+
+.music-btn {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+#btnPrev {
+  left: 18px;
+}
+
+#btnNext {
+  right: 18px;
 }
 
 .music-toggle.muted {
@@ -669,6 +692,20 @@ h1 {
     font-size: clamp(2rem, 10vw, 3rem);
     line-height: 1.02;
     margin-bottom: 10px;
+  }
+
+  .music-controls {
+    top: 12px;
+    right: 12px;
+    padding: 8px 10px;
+    gap: 8px;
+  }
+
+  .music-toggle,
+  .music-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 1rem;
   }
 
   .hero-actions {

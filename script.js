@@ -71,6 +71,8 @@ function startFireworks() {
 
 const music = document.getElementById("bgMusic");
 const toggle = document.getElementById("musicToggle");
+const btnPrev = document.getElementById("btnPrev");
+const btnNext = document.getElementById("btnNext");
 
 const playlist = ["src/musica1.mp3", "src/musica2.mp3", "src/musica3.mp3"];
 
@@ -78,25 +80,33 @@ let current = 0;
 let started = false;
 let isMuted = false;
 
-music.addEventListener("ended", () => {
-  current = (current + 1) % playlist.length;
+function playMusic(index) {
+  current = index % playlist.length;
   music.src = playlist[current];
-  music.play();
+  if (started) music.play();
+}
+
+music.addEventListener("ended", () => {
+  playMusic(current + 1);
 });
 
-async function startMusic() {
-  if (started) return;
+document.addEventListener(
+  "click",
+  async () => {
+    if (!started) {
+      music.src = playlist[current];
+      music.volume = 0.3;
 
-  music.src = playlist[current];
-  music.volume = 0.3;
-
-  try {
-    await music.play();
-    started = true;
-  } catch {
-    console.log("bloqueado autoplay");
-  }
-}
+      try {
+        await music.play();
+        started = true;
+      } catch {
+        console.log("bloqueado autoplay");
+      }
+    }
+  },
+  { once: true },
+);
 
 toggle.addEventListener("click", async () => {
   if (!started) {
@@ -108,7 +118,13 @@ toggle.addEventListener("click", async () => {
   toggle.textContent = isMuted ? "🔇" : "🔊";
 });
 
-document.addEventListener("click", startMusic, { once: true });
+btnNext.addEventListener("click", () => {
+  playMusic(current + 1);
+});
+
+btnPrev.addEventListener("click", () => {
+  playMusic(current - 1 < 0 ? playlist.length - 1 : current - 1);
+});
 
 document
   .querySelectorAll(".reveal:not(.visible)")

@@ -7,9 +7,13 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <button class="music-toggle" id="musicToggle">🔊</button>
+    <div class="music-controls">
+      <button class="music-btn" id="btnPrev">⏮️</button>
+      <button class="music-toggle" id="musicToggle">🔊</button>
+      <button class="music-btn" id="btnNext">⏭️</button>
+    </div>
 
-    <audio id="bgMusic" loop></audio>
+    <audio id="bgMusic"></audio>
     <div
       class="floating-heart"
       style="left: 8%; animation-delay: 0s; animation-duration: 15s"
