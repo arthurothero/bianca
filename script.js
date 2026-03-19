@@ -11,7 +11,13 @@ const observer = new IntersectionObserver(
 
 function toggleCollage() {
   const collage = document.querySelector(".hero-collage");
+  const tip = document.querySelector(".collage-tip");
+
   collage.classList.toggle("expanded");
+
+  if (collage.classList.contains("expanded")) {
+    tip.classList.add("hidden");
+  }
 }
 
 function startFireworks() {
@@ -39,7 +45,7 @@ function startFireworks() {
   }
 
   function animate() {
-    ctx.fillStyle = "rgba(255, 248, 248, 0.2)"; // fundo suave (combina com seu site)
+    ctx.fillStyle = "rgba(255, 248, 248, 0.2)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     particles.forEach((p, i) => {
@@ -58,11 +64,51 @@ function startFireworks() {
     requestAnimationFrame(animate);
   }
 
-  // gera fogos de tempos em tempos
   setInterval(createFirework, 1200);
 
   animate();
 }
+
+const music = document.getElementById("bgMusic");
+const toggle = document.getElementById("musicToggle");
+
+const playlist = ["src/musica1.mp3", "src/musica2.mp3", "src/musica3.mp3"];
+
+let current = 0;
+let started = false;
+let isMuted = false;
+
+music.addEventListener("ended", () => {
+  current = (current + 1) % playlist.length;
+  music.src = playlist[current];
+  music.play();
+});
+
+async function startMusic() {
+  if (started) return;
+
+  music.src = playlist[current];
+  music.volume = 0.3;
+
+  try {
+    await music.play();
+    started = true;
+  } catch {
+    console.log("bloqueado autoplay");
+  }
+}
+
+toggle.addEventListener("click", async () => {
+  if (!started) {
+    await startMusic();
+  }
+
+  isMuted = !isMuted;
+  music.muted = isMuted;
+  toggle.textContent = isMuted ? "🔇" : "🔊";
+});
+
+document.addEventListener("click", startMusic, { once: true });
 
 document
   .querySelectorAll(".reveal:not(.visible)")
