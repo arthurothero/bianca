@@ -1,0 +1,257 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bianca</title>
+    <link rel="stylesheet" href="/frontend/style.css" />
+  </head>
+  <body>
+    <div class="music-controls">
+      <button class="music-btn" id="btnPrev">⏮️</button>
+      <button class="music-toggle" id="musicToggle">🔊</button>
+      <button class="music-btn" id="btnNext">⏭️</button>
+    </div>
+
+    <audio id="bgMusic"></audio>
+    <div
+      class="floating-heart"
+      style="left: 8%; animation-delay: 0s; animation-duration: 15s"
+    ></div>
+    <div
+      class="floating-heart"
+      style="left: 19%; animation-delay: 2s; animation-duration: 18s"
+    ></div>
+    <div
+      class="floating-heart"
+      style="left: 32%; animation-delay: 1s; animation-duration: 14s"
+    ></div>
+    <div
+      class="floating-heart"
+      style="left: 49%; animation-delay: 4s; animation-duration: 20s"
+    ></div>
+    <div
+      class="floating-heart"
+      style="left: 66%; animation-delay: 3s; animation-duration: 17s"
+    ></div>
+    <div
+      class="floating-heart"
+      style="left: 84%; animation-delay: 6s; animation-duration: 16s"
+    ></div>
+
+    <main class="page">
+      <section class="hero">
+        <div class="hero-copy reveal visible">
+          <div class="eyebrow">✨ sua super surpresa UAUUUUU</div>
+          <h1>Pra Bostudinha</h1>
+          <br />
+          <p>
+            Não sou muito com textinhos mas vamos lá... (KKKKKKKK) <br />
+            Você é uma pessoa tão sincera, tão maravilhosa, você tem muita coisa
+            que sempre admirei em uma pessoa. Não tô fazendo uma declaração de
+            amor, mas é que eu realmente te acho incrível e queria fazer algo
+            especial pra você. Fiz a página pra mostrar o quanto você é incrível
+            e o quanto representa pra mim.
+          </p>
+        </div>
+
+        <div class="hero-collage reveal visible" onclick="toggleCollage()">
+          <div class="glow"></div>
+
+          <figure class="photo-card photo-1">
+            <img src="/flores.jfif" alt="Foto especial 1" />
+            <div class="photo-tag">✨</div>
+          </figure>
+
+          <figure class="photo-card photo-2">
+            <img src="/bibi1.jfif" alt="Foto especial 2" />
+            <div class="photo-tag">💗 você é muito linda</div>
+          </figure>
+
+          <figure class="photo-card photo-3">
+            <video autoplay muted loop playsinline>
+              <source src="/dança.mp4" type="video/mp4" />
+            </video>
+            <div class="photo-tag">🌹 quero que seja a gente</div>
+          </figure>
+
+          <p class="collage-tip">clica nas fotos bocozona</p>
+        </div>
+      </section>
+
+      <section id="historia" class="section-head reveal">
+        <h2>Um fiozinho totalmente seu</h2>
+        <p>
+          Faria um album de fotos somente seu, mas infelizmente não te vi ainda,
+          então por enquanto fica com minhas possiveis favoritas ai, que voce
+          tava meio bonitinha 🤏 só meio.
+        </p>
+      </section>
+
+      <section class="story-form-section">
+        <div class="story-form-card">
+          <h3>Adicionar um novo momento 💗</h3>
+
+          <form id="storyForm" class="story-form">
+            <div class="form-group">
+              <label for="storyTitle">Título</label>
+              <input
+                type="text"
+                id="storyTitle"
+                placeholder="Ex: Mais um pedacinho seu"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="storySubtitle">Subtítulo</label>
+              <input
+                type="text"
+                id="storySubtitle"
+                placeholder="Ex: Você"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="storyDescription">Descrição</label>
+              <textarea
+                id="storyDescription"
+                rows="5"
+                placeholder="Escreve aqui o textinho..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="storyImage">Foto</label>
+              <input type="file" id="storyImage" accept="image/*" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">
+              Adicionar no fio
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="story">
+        <svg
+          class="story-line"
+          viewBox="0 0 800 1600"
+          preserveAspectRatio="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M420 20
+         C 680 160, 120 280, 390 500
+         C 650 710, 160 820, 420 1040
+         C 680 1260, 160 1370, 420 1570"
+            fill="none"
+            stroke="var(--line)"
+            stroke-width="6"
+            stroke-linecap="round"
+            stroke-dasharray="10 12"
+          />
+        </svg>
+
+        <div class="story-grid" id="storyGrid">
+          <article class="story-item reveal">
+            <div class="story-dot"></div>
+            <figure class="story-photo">
+              <img src="/bibi6.jfif" alt="Momento 1" />
+            </figure>
+            <div class="story-copy">
+              <span>Você</span>
+              <h3>Mesmo sem te ver ainda</h3>
+              <p>
+                É legal o fato de eu nunca ter visto mas mesmo assim, melhor
+                parte do meu dia é conversar com você e rir de tudo que você
+                manda você já conseguiu se tornar alguém importante pra mim.
+              </p>
+            </div>
+          </article>
+
+          <article class="story-item reverse reveal">
+            <div class="story-dot"></div>
+            <figure class="story-photo">
+              <img src="/bibi3.jfif" alt="Momento 2" />
+            </figure>
+            <div class="story-copy">
+              <span>é</span>
+              <h3>Sua personalidade</h3>
+              <p>
+                Sua personalidade é dificil de encontrar em qualquer pessoa,
+                você é boba, imprevisivel, doida, porém esse conjunto de super
+                personalidades fazem você ser especial. Seu humor é absurdo,
+                nossos gostos batem demais e, pra completar, você ainda tem
+                esses olhos lindos da foto. A melhor sensação é saber que tenho
+                uma pessoa tão parecida comigo e que seja tão incrivel.
+              </p>
+            </div>
+          </article>
+          <article class="story-item reveal">
+            <div class="story-dot"></div>
+            <figure class="story-photo">
+              <img src="/bibi4.jfif" alt="Momento 3" />
+            </figure>
+            <div class="story-copy">
+              <span>Perfeita</span>
+              <h3>Sua beleza</h3>
+              <p>
+                Você tem os olhos mais lindos que já vi, tem um sorriso lindo,
+                tem um cabelo lindo, eu gosto de cada parte, cada detalhe seu,
+                meu deus tá muito meloso. Mas você é uma das pessoas mais lindas
+                que eu já vi tanto de forma externe e interna, eu te adoro
+                muito, espero um dia te amar também.
+              </p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="final-note reveal">
+        <div class="final-card">
+          <h3>E no final a playlist.</h3>
+          <p>
+            Fiz a playlist com todas as músicas que lembra você ou que a letra
+            remete a você de alguma forma. Tem música que me lembra seu jeito,
+            tem música que me lembra o que a gente conversa, tem música que me
+            lembra o que você faz eu sentir.
+          </p>
+        </div>
+      </section>
+
+      <section id="playlist" class="playlist reveal">
+        <div class="playlist-card">
+          <div class="playlist-copy">
+            <h2>Pra você 😁👉</h2>
+          </div>
+
+          <div class="playlist-embed">
+            <iframe
+              src="https://open.spotify.com/embed/playlist/4qgMORWm3lzFHWCVBF12z0?si=c035cfc1e94a4c9b&pt=bd5a68a9bc6467a90a9645603517cf0c"
+              allow="
+                autoplay;
+                clipboard-write;
+                encrypted-media;
+                fullscreen;
+                picture-in-picture;
+              "
+              loading="lazy"
+            >
+            </iframe>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <button class="btn-fireworks" onclick="startFireworks()">
+      Clica aqui pra estourar mendigo
+    </button>
+
+    <canvas id="fireworks-canvas"></canvas>
+
+    <script src="script.js"></script>
+  </body>
+</html>
