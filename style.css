@@ -1033,7 +1033,6 @@ h1 {
     padding: 18px;
   }
 
-  /* mantém o fio no mobile */
   .story-line {
     display: block;
     left: 50%;
@@ -1042,5 +1041,275 @@ h1 {
     width: min(280px, calc(100% - 40px));
     height: calc(100% - 140px);
     opacity: 0.55;
+  }
+}
+
+.carta-section {
+  max-width: 780px;
+  margin: 60px auto 0;
+  padding: 0 22px 80px;
+  text-align: center;
+}
+ 
+.carta-header {
+  margin-bottom: 32px;
+}
+ 
+.carta-header h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.9rem, 4vw, 2.8rem);
+  letter-spacing: -0.03em;
+}
+ 
+.carta-header p {
+  color: #855767;
+  line-height: 1.8;
+  margin: 0;
+}
+ 
+/* Papel da carta */
+.carta-form-wrap {
+  perspective: 800px;
+}
+ 
+.carta-papel {
+  position: relative;
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 28px;
+  padding: 32px 28px 20px;
+  box-shadow:
+    var(--shadow),
+    inset 0 0 0 1px rgba(233, 122, 154, 0.12);
+  backdrop-filter: blur(14px);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  overflow: hidden;
+}
+ 
+.carta-papel:focus-within {
+  transform: translateY(-4px);
+  box-shadow:
+    0 28px 56px rgba(184, 102, 131, 0.2),
+    inset 0 0 0 1px rgba(233, 122, 154, 0.2);
+}
+ 
+/* Linhas decorativas */
+.carta-linhas {
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  overflow: hidden;
+  pointer-events: none;
+}
+ 
+.carta-linhas::before {
+  content: "";
+  position: absolute;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 35px,
+    rgba(233, 122, 154, 0.07) 35px,
+    rgba(233, 122, 154, 0.07) 36px
+  );
+}
+ 
+.carta-textarea {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  border: none;
+  background: transparent;
+  resize: none;
+  font-family: "Georgia", serif;
+  font-size: 1.06rem;
+  line-height: 36px;
+  color: var(--text);
+  outline: none;
+  min-height: 216px;
+  padding: 0 4px;
+}
+ 
+.carta-textarea::placeholder {
+  color: #c49cac;
+}
+ 
+.carta-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(233, 122, 154, 0.12);
+}
+ 
+.carta-contador {
+  font-size: 0.85rem;
+  color: #b08898;
+}
+ 
+.carta-enviar {
+  appearance: none;
+  border: none;
+  cursor: pointer;
+  background: linear-gradient(135deg, #e97a9a, #d96188);
+  color: white;
+  padding: 12px 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 12px 28px rgba(217, 97, 136, 0.28);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+ 
+.carta-enviar:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 36px rgba(217, 97, 136, 0.34);
+}
+ 
+.carta-enviar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+ 
+/* Sucesso - envelope */
+.carta-sucesso {
+  animation: aparece 0.6s ease forwards;
+}
+ 
+.carta-sucesso.hidden {
+  display: none;
+}
+ 
+@keyframes aparece {
+  from { opacity: 0; transform: translateY(20px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+ 
+.carta-envelope {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.82);
+  border-radius: 28px;
+  padding: 36px 40px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+ 
+.carta-envelope-aba {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(135deg, rgba(233, 122, 154, 0.15), rgba(217, 97, 136, 0.08));
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+ 
+.carta-envelope-corpo {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+ 
+.carta-envelope-corpo span {
+  font-size: 2.8rem;
+  display: block;
+  margin-bottom: 12px;
+  animation: balanca 1.2s ease infinite alternate;
+}
+ 
+@keyframes balanca {
+  from { transform: rotate(-6deg) scale(1); }
+  to   { transform: rotate(6deg) scale(1.08); }
+}
+ 
+.carta-envelope-corpo p {
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
+}
+ 
+.carta-envelope-corpo small {
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+ 
+/* Cartas recebidas */
+.cartas-recebidas {
+  margin-top: 48px;
+  text-align: left;
+}
+ 
+.cartas-titulo {
+  font-size: 1.3rem;
+  margin: 0 0 18px;
+  color: var(--muted);
+  text-align: center;
+}
+ 
+.cartas-lista {
+  display: grid;
+  gap: 16px;
+}
+ 
+.carta-loading {
+  text-align: center;
+  color: #b08898;
+  font-size: 0.92rem;
+  padding: 20px;
+}
+ 
+.carta-item {
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 22px;
+  padding: 22px 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  border-left: 3px solid rgba(233, 122, 154, 0.4);
+  animation: aparece 0.5s ease forwards;
+}
+ 
+.carta-item-texto {
+  font-family: "Georgia", serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: #7b5060;
+  margin: 0 0 10px;
+  white-space: pre-wrap;
+}
+ 
+.carta-item-data {
+  font-size: 0.8rem;
+  color: #b08898;
+}
+ 
+.carta-vazia {
+  text-align: center;
+  color: #b08898;
+  padding: 24px;
+  font-size: 0.95rem;
+}
+ 
+@media (max-width: 768px) {
+  .carta-section {
+    padding: 0 16px 60px;
+  }
+ 
+  .carta-papel {
+    padding: 22px 16px 16px;
+    border-radius: 22px;
+  }
+ 
+  .carta-textarea {
+    font-size: 0.98rem;
+    min-height: 180px;
   }
 }

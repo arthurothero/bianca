@@ -129,3 +129,106 @@ btnPrev.addEventListener("click", () => {
 document
   .querySelectorAll(".reveal:not(.visible)")
   .forEach((el) => observer.observe(el));
+
+const SUPABASE_URL = "https://anbawllurpsygcucemtx.supabase.co";
+const SUPABASE_ANON_KEY =
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFuYmF3bGx1cnBzeWdjdWNlbXR4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwMTA4MzcsImV4cCI6MjA5NTU4NjgzN30.qfdmfimR6lQnqy_JRI_To8wxJxGJzFTVNK1i3JhC8a4";
+
+const cartaTexto = document.getElementById("cartaTexto");
+const cartaEnviar = document.getElementById("cartaEnviar");
+const cartaCount = document.getElementById("cartaCount");
+const cartaFormWrap = document.getElementById("cartaFormWrap");
+const cartaSucesso = document.getElementById("cartaSucesso");
+const cartasLista = document.getElementById("cartasLista");
+
+cartaTexto?.addEventListener("input", () => {
+  cartaCount.textContent = cartaTexto.value.length;
+});
+
+cartaEnviar?.addEventListener("click", async () => {
+  const mensagem = cartaTexto.value.trim();
+  if (!mensagem) return;
+
+  cartaEnviar.disabled = true;
+  cartaEnviar.textContent = "Enviando... 💌";
+
+  try {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/cartas`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        Prefer: "return=minimal",
+      },
+      body: JSON.stringify({ mensagem }),
+    });
+
+    if (!res.ok) throw new Error("Erro ao enviar");
+
+    cartaFormWrap.style.display = "none";
+    cartaSucesso.classList.remove("hidden");
+
+    carregarCartas();
+  } catch (err) {
+    console.error(err);
+    cartaEnviar.disabled = false;
+    cartaEnviar.textContent = "Enviar carta 💌";
+    alert("Não consegui enviar, tenta de novo 😢");
+  }
+});
+
+async function carregarCartas() {
+  try {
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/cartas?select=mensagem,created_at&order=created_at.desc`,
+      {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+      },
+    );
+
+    const data = await res.json();
+
+    if (!data.length) {
+      cartasLista.innerHTML = `<p class="carta-vazia">Nenhuma cartinha ainda... 🥺</p>`;
+      return;
+    }
+
+    cartasLista.innerHTML = data
+      .map((c) => {
+        const data_formatada = new Date(c.created_at).toLocaleDateString(
+          "pt-BR",
+          {
+            day: "2-digit",
+            month: "long",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          },
+        );
+        return `
+        <div class="carta-item">
+          <p class="carta-item-texto">${escapeHtml(c.mensagem)}</p>
+          <span class="carta-item-data">💌 ${data_formatada}</span>
+        </div>
+      `;
+      })
+      .join("");
+  } catch (err) {
+    console.error(err);
+    cartasLista.innerHTML = `<p class="carta-vazia">Erro ao carregar as cartas 😢</p>`;
+  }
+}
+
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+carregarCartas();

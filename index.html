@@ -474,6 +474,57 @@
               </p>
             </div>
           </article>
+          <article class="story-item reverse reveal">
+            <div class="story-dot"></div>
+            <figure class="story-photo">
+              <img src="src/euiela.jfif" alt="Momento 19" />
+            </figure>
+            <div class="story-copy">
+              <span>Namora comigo por favor</span>
+              <h3>Sétimo Encontro</h3>
+              <p>
+                Porra, amor, é surreal como te ver em um dia da semana me fez
+                tão bem. Tava meio pra baixo porque tava com a incerteza de
+                poder te ver esse final de semana, e ter te visto assim numa
+                terça-feira me fez muito feliz. Mesmo sem ter muito roteiro, ver
+                por onde você anda, por onde você passa, lugares que você vê
+                todo dia, já é um super rolê pra mim.
+                <br /><br />
+                Sei que estou te devendo muitos lugares pra ir e coisas pra
+                fazer, e prometo que vou cumprir todas. Não posso extrapolar
+                tanto agora se quiser fazer uma surpresa boa pra você no dia dos
+                namorados.
+                <br /><br />
+                Eu realmente estou muito feliz por sempre estar perto de ti e
+                estar me aproximando mais de você. Sinto que nessa parte estamos
+                sendo mais sinceros com nós mesmos, e isso me faz bem, poder ter
+                essa confiança em você e sentir que você confia em mim também.
+                Acabei falando muito sobre o que estou sentindo, mas não tanto
+                sobre o rolê. Mas o que dizer, se foi incrível simplesmente
+                ficar na rua igual idiota conversando e rindo bastante? Foi
+                ótimo a gente ter ido no açaí também, porque pude ficar mais
+                perto de você.
+                <br /><br />
+                Eu sinceramente sinto muito sua falta. Realmente chorei naquela
+                hora do uber, porque não sei quando vou poder te ver de novo
+                antes do dia dos namorados. Você faz uma falta enorme e já tem
+                um grande espaço pra mim. Eu te desejo todos os dias e a todo
+                momento. Quando pudermos morar junto, sei que vai ser um sonho
+                realizado, porque um dia com você sinto como se eu vivesse
+                milhares de uma vez.
+                <br /><br />
+                E sempre repenso também por onde tudo começou, o quão
+                relativamente tranquilo foi crescer nossa relação. Você é uma
+                pessoa absurda, é tão gostoso conversar com você. Sei que você
+                me acha chato às vezes, mas é porque gosto de encher um pouco o
+                seu saco. Mas nada mesmo vai diminuir o fato de que eu não tenho
+                uma palavra pra descrever o amor que você me faz sentir.
+                <br /><br />
+                Te amo, Bianca. Muito mesmo. Quero te namorar logo, no caso é só
+                colocar a aliança né, pq minha namorada você já é.
+              </p>
+            </div>
+          </article>
         </div>
       </section>
 
@@ -512,6 +563,52 @@
         </div>
       </section>
     </main>
+
+    <section id="carta-dela" class="carta-section reveal">
+      <div class="carta-header">
+        <h2>Um espaço pra você xananilson 🌹</h2>
+        <p>Escreve uma cartinha pra mim aqui, só você e eu vamos ver.</p>
+      </div>
+
+      <div class="carta-form-wrap" id="cartaFormWrap">
+        <div class="carta-papel">
+          <div class="carta-linhas" aria-hidden="true"></div>
+          <textarea
+            id="cartaTexto"
+            class="carta-textarea"
+            placeholder="Não sou muito boa com textinhos, mas vamos lá..."
+            maxlength="5000"
+            rows="8"
+          ></textarea>
+          <div class="carta-rodape">
+            <span class="carta-contador"
+              ><span id="cartaCount">0</span>/5000</span
+            >
+            <button class="carta-enviar" id="cartaEnviar">
+              Enviar carta 💌
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="carta-sucesso hidden" id="cartaSucesso">
+        <div class="carta-envelope">
+          <div class="carta-envelope-aba"></div>
+          <div class="carta-envelope-corpo">
+            <span>💌</span>
+            <p>Carta entregue com amor!</p>
+            <small>Agora posso ler</small>
+          </div>
+        </div>
+      </div>
+
+      <div class="cartas-recebidas" id="cartasRecebidas">
+        <h3 class="cartas-titulo">Cartinhas recebidas 🫶</h3>
+        <div class="cartas-lista" id="cartasLista">
+          <div class="carta-loading">carregando...</div>
+        </div>
+      </div>
+    </section>
 
     <button class="btn-fireworks" onclick="startFireworks()">
       Clica aqui pra estourar mendigo
