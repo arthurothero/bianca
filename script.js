@@ -232,3 +232,86 @@ function escapeHtml(str) {
 }
 
 carregarCartas();
+
+const albumMemorias = [
+  {
+    src: "src/princesa.jfif",
+    caption: "Nesse dia você achou que não tava bonita, mas você esquece que sua beleza não depende de dia bom ou dia ruim. Você é linda em qualquer versão sua.",
+  },
+  {
+    src: "src/elaetudo.mp4",
+    caption: "O jeito que você ri de qualquer besteira que eu faço.",
+  },
+  {
+    src: "src/bibi4.jfif",
+    caption: "Essa foto me lembra o quanto seu sorriso é o mais bonito que eu já vi.",
+  },
+  {
+    src: "src/bianca6.jfif",
+    caption: "Um momento que foi rápido, mas ficou guardado na minha cabeça eternamente.",
+  },
+  {
+    src: "src/rawrr.jfif",
+    caption: "Você sendo você, do jeitinho que eu mais gosto.",
+  },
+  {
+    src: "src/euteamomuito2.jfif",
+    caption: "Uma das fotos que eu mais olho quando bate saudade.",
+  },
+  {
+    src: "src/bebe.jfif",
+    caption: "Seu jeitinho de bebê que me faz querer te proteger pra sempre. Seu sorriso é a mesma coisa de quando você era bebê, e eu amo isso.",
+  },
+  {
+    src: "src/beijos.mp4",
+    caption: "Seu beijo é o mais confortável que eu já recebi na vida, e é o que mais me apaixona.",
+  },
+  {
+    src: "src/pintura.jfif",
+    caption: "Uma mulher realmente bonita não é aquela de quem se elogia uma parte específica - pernas, braços, mas aquela cuja beleza toda é tão completa que você nem consegue admirar só um pedaço dela.",
+  },
+];
+ 
+const albumHeart = document.getElementById("albumHeart");
+const albumGrid = document.getElementById("albumGrid");
+const albumProgress = document.getElementById("albumProgress");
+ 
+let albumRevelados = 0;
+ 
+function ehVideo(src) {
+  return /\.(mp4|mov|webm)$/i.test(src);
+}
+ 
+function revelarMemoria() {
+  if (albumRevelados >= albumMemorias.length) return;
+ 
+  const memoria = albumMemorias[albumRevelados];
+ 
+  const midiaHTML = ehVideo(memoria.src)
+    ? `<video src="${memoria.src}" autoplay muted loop playsinline></video>`
+    : `<img src="${memoria.src}" alt="Memória secreta" />`;
+ 
+  const card = document.createElement("div");
+  card.className = "album-card";
+  card.innerHTML = `
+    ${midiaHTML}
+    <p>${memoria.caption}</p>
+  `;
+ 
+  albumGrid.appendChild(card);
+  albumRevelados++;
+ 
+  albumProgress.textContent = `${albumRevelados} de ${albumMemorias.length} descobertas`;
+ 
+  if (albumRevelados >= albumMemorias.length) {
+    albumHeart.disabled = true;
+    albumHeart.textContent = "💌";
+ 
+    const final = document.createElement("div");
+    final.className = "album-final";
+    final.innerHTML = `<p>Você descobriu o álbum secreto inteiro 🥹 e olha que isso foi só uma parte de tudo que eu guardo sobre você.</p>`;
+    albumGrid.appendChild(final);
+  }
+}
+ 
+albumHeart?.addEventListener("click", revelarMemoria);
