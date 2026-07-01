@@ -6,7 +6,7 @@ const observer = new IntersectionObserver(
       }
     });
   },
-  { threshold: 0.16 },
+  { threshold: 0, rootMargin: "0px 0px -10% 0px" },
 );
 
 function toggleCollage() {
