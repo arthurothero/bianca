@@ -908,6 +908,77 @@
           </div>
         </div>
       </section>
+      <section id="ceu-encontro" class="ceu-section reveal">
+        <div class="ceu-header">
+          <h2>O céu de quando a gente se conheceu</h2>
+          <p>
+            12 de março de 2026. A lua tava minguante e bem fininha, então as
+            estrelas ficaram assim, quase sem concorrência.
+          </p>
+        </div>
+
+        <div class="ceu-sky" id="ceuSky">
+          <svg
+            id="ceuSvg"
+            viewBox="0 0 800 500"
+            preserveAspectRatio="xMidYMid meet"
+          >
+            <g id="ceuEstrelasFundo"></g>
+
+            <g class="ceu-constelacao" data-nome="Cruzeiro do Sul">
+              <line x1="560" y1="120" x2="600" y2="230" class="ceu-linha" />
+              <line x1="530" y1="160" x2="630" y2="190" class="ceu-linha" />
+              <circle cx="560" cy="120" r="4" class="ceu-estrela" />
+              <circle cx="600" cy="230" r="5" class="ceu-estrela" />
+              <circle cx="530" cy="160" r="3.5" class="ceu-estrela" />
+              <circle cx="630" cy="190" r="3.5" class="ceu-estrela" />
+            </g>
+
+            <g class="ceu-constelacao" data-nome="Órion">
+              <line x1="150" y1="140" x2="180" y2="180" class="ceu-linha" />
+              <line x1="180" y1="180" x2="150" y2="260" class="ceu-linha" />
+              <line x1="150" y1="260" x2="230" y2="300" class="ceu-linha" />
+              <line x1="230" y1="300" x2="260" y2="220" class="ceu-linha" />
+              <line x1="260" y1="220" x2="180" y2="180" class="ceu-linha" />
+              <line x1="180" y1="205" x2="200" y2="230" class="ceu-linha" />
+              <line x1="200" y1="230" x2="220" y2="255" class="ceu-linha" />
+              <circle cx="150" cy="140" r="4" class="ceu-estrela" />
+              <circle cx="180" cy="180" r="4.5" class="ceu-estrela" />
+              <circle cx="150" cy="260" r="4" class="ceu-estrela" />
+              <circle cx="230" cy="300" r="4" class="ceu-estrela" />
+              <circle cx="260" cy="220" r="5" class="ceu-estrela" />
+              <circle cx="180" cy="205" r="2.5" class="ceu-estrela" />
+              <circle cx="200" cy="230" r="2.5" class="ceu-estrela" />
+              <circle cx="220" cy="255" r="2.5" class="ceu-estrela" />
+            </g>
+
+            <g class="ceu-constelacao" data-nome="Cão Maior">
+              <circle
+                cx="330"
+                cy="360"
+                r="6.5"
+                class="ceu-estrela ceu-sirius"
+              />
+              <line x1="330" y1="360" x2="360" y2="400" class="ceu-linha" />
+              <line x1="330" y1="360" x2="300" y2="410" class="ceu-linha" />
+              <circle cx="360" cy="400" r="3" class="ceu-estrela" />
+              <circle cx="300" cy="410" r="3" class="ceu-estrela" />
+            </g>
+
+            <g id="ceuLua"></g>
+          </svg>
+
+          <div class="ceu-tooltip hidden" id="ceuTooltip">
+            <strong id="ceuTooltipNome"></strong>
+            <p id="ceuTooltipTexto"></p>
+          </div>
+        </div>
+
+        <p class="ceu-legenda">
+          Toca nas estrelas pra ver o nome de cada constelação.
+          Lembrando que a tantas estrelas e nenhuma se compara a sua beleza, tudo se alinhou pra eu te conhecer e viver com você.
+        </p>
+      </section>
     </main>
 
     <section id="carta-dela" class="carta-section reveal">

@@ -236,7 +236,8 @@ carregarCartas();
 const albumMemorias = [
   {
     src: "src/princesa.jfif",
-    caption: "Nesse dia você achou que não tava bonita, mas você esquece que sua beleza não depende de dia bom ou dia ruim. Você é linda em qualquer versão sua.",
+    caption:
+      "Nesse dia você achou que não tava bonita, mas você esquece que sua beleza não depende de dia bom ou dia ruim. Você é linda em qualquer versão sua.",
   },
   {
     src: "src/elaetudo.mp4",
@@ -244,11 +245,13 @@ const albumMemorias = [
   },
   {
     src: "src/bibi4.jfif",
-    caption: "Essa foto me lembra o quanto seu sorriso é o mais bonito que eu já vi.",
+    caption:
+      "Essa foto me lembra o quanto seu sorriso é o mais bonito que eu já vi.",
   },
   {
     src: "src/bianca6.jfif",
-    caption: "Um momento que foi rápido, mas ficou guardado na minha cabeça eternamente.",
+    caption:
+      "Um momento que foi rápido, mas ficou guardado na minha cabeça eternamente.",
   },
   {
     src: "src/rawrr.jfif",
@@ -260,58 +263,132 @@ const albumMemorias = [
   },
   {
     src: "src/bebe.jfif",
-    caption: "Seu jeitinho de bebê que me faz querer te proteger pra sempre. Seu sorriso é a mesma coisa de quando você era bebê, e eu amo isso.",
+    caption:
+      "Seu jeitinho de bebê que me faz querer te proteger pra sempre. Seu sorriso é a mesma coisa de quando você era bebê, e eu amo isso.",
   },
   {
     src: "src/beijos.mp4",
-    caption: "Seu beijo é o mais confortável que eu já recebi na vida, e é o que mais me apaixona.",
+    caption:
+      "Seu beijo é o mais confortável que eu já recebi na vida, e é o que mais me apaixona.",
   },
   {
     src: "src/pintura.jfif",
-    caption: "Uma mulher realmente bonita não é aquela de quem se elogia uma parte específica - pernas, braços, mas aquela cuja beleza toda é tão completa que você nem consegue admirar só um pedaço dela.",
+    caption:
+      "Uma mulher realmente bonita não é aquela de quem se elogia uma parte específica - pernas, braços, mas aquela cuja beleza toda é tão completa que você nem consegue admirar só um pedaço dela.",
   },
 ];
- 
+
 const albumHeart = document.getElementById("albumHeart");
 const albumGrid = document.getElementById("albumGrid");
 const albumProgress = document.getElementById("albumProgress");
- 
+
 let albumRevelados = 0;
- 
+
 function ehVideo(src) {
   return /\.(mp4|mov|webm)$/i.test(src);
 }
- 
+
 function revelarMemoria() {
   if (albumRevelados >= albumMemorias.length) return;
- 
+
   const memoria = albumMemorias[albumRevelados];
- 
+
   const midiaHTML = ehVideo(memoria.src)
     ? `<video src="${memoria.src}" autoplay muted loop playsinline></video>`
     : `<img src="${memoria.src}" alt="Memória secreta" />`;
- 
+
   const card = document.createElement("div");
   card.className = "album-card";
   card.innerHTML = `
     ${midiaHTML}
     <p>${memoria.caption}</p>
   `;
- 
+
   albumGrid.appendChild(card);
   albumRevelados++;
- 
+
   albumProgress.textContent = `${albumRevelados} de ${albumMemorias.length} descobertas`;
- 
+
   if (albumRevelados >= albumMemorias.length) {
     albumHeart.disabled = true;
     albumHeart.textContent = "💌";
- 
+
     const final = document.createElement("div");
     final.className = "album-final";
     final.innerHTML = `<p>Você descobriu o álbum secreto inteiro 🥹 e olha que isso foi só uma parte de tudo que eu guardo sobre você.</p>`;
     albumGrid.appendChild(final);
   }
 }
- 
+
 albumHeart?.addEventListener("click", revelarMemoria);
+
+(function () {
+  const svgNs = "http://www.w3.org/2000/svg";
+  const fundo = document.getElementById("ceuEstrelasFundo");
+  const luaGrupo = document.getElementById("ceuLua");
+  const tooltip = document.getElementById("ceuTooltip");
+
+  for (let i = 0; i < 140; i++) {
+    const x = Math.random() * 800;
+    const y = Math.random() * 460;
+    const r = Math.random() * 1.3 + 0.3;
+    const c = document.createElementNS(svgNs, "circle");
+    c.setAttribute("cx", x);
+    c.setAttribute("cy", y);
+    c.setAttribute("r", r);
+    c.setAttribute("fill", "rgba(255,255,255,0.7)");
+    fundo.appendChild(c);
+  }
+
+  const luaX = 700;
+  const luaY = 70;
+  const luaRaio = 26;
+  const iluminacao = 0.4;
+
+  const luaBase = document.createElementNS(svgNs, "circle");
+  luaBase.setAttribute("cx", luaX);
+  luaBase.setAttribute("cy", luaY);
+  luaBase.setAttribute("r", luaRaio);
+  luaBase.setAttribute("fill", "#2a2338");
+  luaGrupo.appendChild(luaBase);
+
+  const clipId = "ceuLuaClip";
+  const defs = document.createElementNS(svgNs, "defs");
+  const clip = document.createElementNS(svgNs, "clipPath");
+  clip.setAttribute("id", clipId);
+  const clipCircle = document.createElementNS(svgNs, "circle");
+  clipCircle.setAttribute("cx", luaX);
+  clipCircle.setAttribute("cy", luaY);
+  clipCircle.setAttribute("r", luaRaio);
+  clip.appendChild(clipCircle);
+  defs.appendChild(clip);
+  luaGrupo.appendChild(defs);
+
+  const luaCrescente = document.createElementNS(svgNs, "circle");
+  const deslocamento = luaRaio * (1 - iluminacao * 2);
+  luaCrescente.setAttribute("cx", luaX + luaRaio * 1.15 - deslocamento);
+  luaCrescente.setAttribute("cy", luaY);
+  luaCrescente.setAttribute("r", luaRaio);
+  luaCrescente.setAttribute("fill", "#f4ecd8");
+  luaCrescente.setAttribute("clip-path", `url(#${clipId})`);
+  luaGrupo.appendChild(luaCrescente);
+
+  const significados = {
+    "Cruzeiro do Sul":
+      "É a constelação que navegadores usam há séculos pra encontrar o sul e não se perder, mesmo sem nenhum outro ponto de referência no céu. É bonito pensar que tudo naquela noite me guiou até você.",
+    Órion:
+      "Uma das constelações mais fáceis de reconhecer no mundo inteiro, vista praticamente em qualquer lugar do planeta. Em várias culturas diferentes, ao longo de milhares de anos, gente que nunca vai se encontrar olhou pro mesmo desenho no céu. Achei que combinava, porque foi isso que a gente virou, duas pessoas que nem deveriam se cruzar, olhando pro mesmo lugar.",
+    "Cão Maior":
+      "Tem a Sirius, a estrela mais brilhante que existe no céu noturno visto da Terra. Não é a maior nem a mais próxima, só a que mais se destaca. E foi exatamente assim que você apareceu.",
+  };
+
+  document.querySelectorAll(".ceu-constelacao").forEach((grupo) => {
+    grupo.addEventListener("click", () => {
+      const nome = grupo.getAttribute("data-nome");
+      document.getElementById("ceuTooltipNome").textContent = nome;
+      document.getElementById("ceuTooltipTexto").textContent =
+        significados[nome] || "";
+      tooltip.classList.remove("hidden");
+    });
+  });
+})();
