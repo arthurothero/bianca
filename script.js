@@ -74,7 +74,7 @@ const toggle = document.getElementById("musicToggle");
 const btnPrev = document.getElementById("btnPrev");
 const btnNext = document.getElementById("btnNext");
 
-const playlist = ["src/musica1.mp3", "src/musica2.mp3", "src/musica3.mp3"];
+const playlist = ["src/musica1.mp3", "src/musica2.mp3", "src/musica3.mp3", "src/musica4.mp3"];
 
 let current = 0;
 let started = false;
@@ -392,3 +392,25 @@ albumHeart?.addEventListener("click", revelarMemoria);
     });
   });
 })();
+
+async function manterSupabaseAtivo() {
+  try {
+    await fetch(
+      `${SUPABASE_URL}/rest/v1/cartas?select=id&limit=1`,
+      {
+        headers: {
+          apikey: SUPABASE_ANON_KEY,
+          Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+        },
+      },
+    );
+
+    console.log("Supabase acessado com sucesso");
+  } catch (error) {
+    console.error("Erro ao acessar o Supabase:", error);
+  }
+}
+
+manterSupabaseAtivo();
+
+setInterval(manterSupabaseAtivo, 1000 * 60 * 60 * 24);
