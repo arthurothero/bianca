@@ -141,6 +141,44 @@ const cartaFormWrap = document.getElementById("cartaFormWrap");
 const cartaSucesso = document.getElementById("cartaSucesso");
 const cartasLista = document.getElementById("cartasLista");
 
+// A última carta já tinha uma estrutura de livro; ela volta a ser uma carta única.
+document.querySelectorAll(".carta-livro").forEach((livro) => {
+  const texto = document.createElement("p");
+  texto.innerHTML = [...livro.querySelectorAll(".carta-pagina p")].map((pagina) => pagina.innerHTML).join("<br><br>");
+  livro.replaceWith(texto);
+});
+
+// Leitor: mostra uma carta inteira por vez, sem alterar o texto original.
+const cartasLeitor = document.querySelector(".story-grid");
+if (cartasLeitor) {
+  const cartas = [...cartasLeitor.querySelectorAll(":scope > .story-item")];
+  const leitorControles = document.createElement("div");
+  leitorControles.className = "cartas-leitor-controles";
+  leitorControles.innerHTML = '<button type="button" aria-label="Carta anterior" class="carta-navegacao leitor-anterior"><span class="leitor-seta">←</span><span class="leitor-label">Carta anterior</span></button><div class="leitor-status"><span class="leitor-kicker">LEITURA</span><span class="carta-pagina-indicador leitor-indicador"></span><span class="leitor-progresso"><i></i></span><button type="button" class="leitor-ultima">Ir para a última</button></div><button type="button" aria-label="Próxima carta" class="carta-navegacao leitor-proxima"><span class="leitor-proximo-texto">Próxima carta</span><span class="leitor-seta">→</span></button>';
+  cartasLeitor.parentElement.insertBefore(leitorControles, cartasLeitor);
+  let cartaAtual = 0;
+  const leitorAnterior = leitorControles.querySelector(".leitor-anterior");
+  const leitorProxima = leitorControles.querySelector(".leitor-proxima");
+  const leitorIndicador = leitorControles.querySelector(".leitor-indicador");
+  const leitorUltima = leitorControles.querySelector(".leitor-ultima");
+  const atualizarLeitor = () => {
+    cartas.forEach((carta, indice) => carta.classList.toggle("carta-leitor-ativa", indice === cartaAtual));
+    leitorIndicador.textContent = `Carta ${cartaAtual + 1} de ${cartas.length}`;
+    leitorControles.querySelector(".leitor-progresso i").style.width = `${((cartaAtual + 1) / cartas.length) * 100}%`;
+    leitorAnterior.disabled = cartaAtual === 0;
+    leitorProxima.querySelector(".leitor-proximo-texto").textContent = cartaAtual === cartas.length - 1 ? "Voltar ao início" : "Próxima carta";
+    leitorProxima.classList.toggle("leitor-no-fim", cartaAtual === cartas.length - 1);
+    leitorUltima.disabled = cartaAtual === cartas.length - 1;
+  };
+  leitorAnterior.addEventListener("click", () => { if (cartaAtual > 0) { cartaAtual--; atualizarLeitor(); } });
+  leitorProxima.addEventListener("click", () => {
+    if (cartaAtual < cartas.length - 1) { cartaAtual++; atualizarLeitor(); }
+    else { cartaAtual = 0; atualizarLeitor(); cartasLeitor.parentElement.scrollIntoView({ behavior: "smooth" }); }
+  });
+  leitorUltima.addEventListener("click", () => { cartaAtual = cartas.length - 1; atualizarLeitor(); });
+  atualizarLeitor();
+}
+
 cartaTexto?.addEventListener("input", () => {
   cartaCount.textContent = cartaTexto.value.length;
 });

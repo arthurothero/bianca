@@ -11,6 +11,84 @@
   --max: 1120px;
 }
 
+/* Carta em formato de livrinho */
+.carta-livro { background: #fff; border-radius: 18px; box-shadow: 0 14px 35px rgba(92, 49, 67, 0.14); padding: clamp(1.25rem, 3vw, 2.2rem); width: 100%; }
+.carta-pagina { display: none; min-height: 250px; animation: cartaPaginaEntrada 0.35s ease both; }
+.carta-pagina.carta-pagina-ativa { display: block; }
+.carta-pagina p { margin: 0; line-height: 1.8; }
+.carta-controles { align-items: center; display: flex; gap: 0.75rem; justify-content: space-between; margin-top: 1.5rem; }
+.carta-navegacao { background: var(--accent, #b85c7a); border: 0; border-radius: 999px; color: #fff; cursor: pointer; font: inherit; font-weight: 700; padding: 0.75rem 1.1rem; transition: opacity 0.2s, transform 0.2s; }
+.carta-navegacao:hover:not(:disabled) { transform: translateY(-2px); }
+.carta-navegacao:disabled { cursor: not-allowed; opacity: 0.4; }
+.carta-pagina-indicador { color: #805568; font-size: 0.95rem; text-align: center; }
+@keyframes cartaPaginaEntrada { from { opacity: 0; transform: translateX(10px); } to { opacity: 1; transform: translateX(0); } }
+@media (max-width: 600px) { .carta-livro { padding: 1.25rem; } .carta-pagina { min-height: 300px; } .carta-pagina p { font-size: 1.05rem; } .carta-navegacao { min-width: 105px; padding: 0.9rem 1rem; } .carta-controles { gap: 0.4rem; } }
+
+.story-grid > .story-item { display: none; }
+.story-grid > .story-item.carta-leitor-ativa { display: grid; }
+.cartas-leitor-controles { align-items: center; display: flex; gap: 0.75rem; justify-content: center; margin: 0 auto 1.5rem; max-width: var(--max); }
+.leitor-indicador { min-width: 105px; }
+@media (max-width: 600px) {
+  .cartas-leitor-controles { gap: 0.4rem; }
+  .cartas-leitor-controles .carta-navegacao { min-width: 0; padding: 0.9rem 0.75rem; }
+}
+.hero-collage.buque.expanded .photo-card:nth-of-type(1) { transform: translateX(-285px) rotate(-72deg) translateY(-18px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(2) { transform: translateX(-190px) rotate(-48deg) translateY(-24px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(3) { transform: translateX(-95px) rotate(-24deg) translateY(-28px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(4) { transform: translateX(0) rotate(0deg) translateY(-30px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(5) { transform: translateX(95px) rotate(24deg) translateY(-28px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(6) { transform: translateX(190px) rotate(48deg) translateY(-24px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(7) { transform: translateX(285px) rotate(72deg) translateY(-18px); }
+
+/* Leitor de cartas: uma carta completa por vez */
+.story-grid > .story-item.carta-leitor-ativa {
+  animation: cartaLeitorEntrada 0.45s ease both;
+}
+.story-copy {
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(233, 122, 154, 0.18);
+  padding: clamp(1.5rem, 4vw, 2.6rem);
+  box-shadow: 0 20px 45px rgba(184, 102, 131, 0.16);
+}
+.story-copy h3 { color: #633246; font-size: clamp(1.6rem, 3vw, 2.2rem); margin-top: 0; }
+.story-copy > p { color: #765365; font-size: 1.04rem; line-height: 1.9; margin-bottom: 0; }
+.cartas-leitor-controles { padding: 0.35rem; }
+.cartas-leitor-controles .carta-navegacao { box-shadow: 0 8px 18px rgba(233, 122, 154, 0.2); }
+.cartas-leitor-controles {
+  align-items: center;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(233, 122, 154, 0.16);
+  border-radius: 999px;
+  box-shadow: 0 12px 30px rgba(184, 102, 131, 0.1);
+  gap: 1.2rem;
+  max-width: 650px;
+  padding: 0.55rem 0.65rem;
+}
+.cartas-leitor-controles .carta-navegacao {
+  align-items: center;
+  display: inline-flex;
+  gap: 0.55rem;
+  justify-content: center;
+  min-width: 150px;
+  padding: 0.8rem 1.05rem;
+}
+.leitor-seta { font-size: 1.15rem; line-height: 1; }
+.leitor-status { align-items: center; display: flex; flex: 1; flex-direction: column; gap: 0.2rem; min-width: 110px; }
+.leitor-kicker { color: #c16b88; font-size: 0.62rem; font-weight: 800; letter-spacing: 0.16em; }
+.leitor-indicador { color: #633246; font-size: 0.88rem; font-weight: 700; min-width: 0; }
+.leitor-progresso { background: #f5d9e2; border-radius: 99px; height: 3px; overflow: hidden; width: 82px; }
+.leitor-progresso i { background: #e9789a; border-radius: inherit; display: block; height: 100%; transition: width 0.35s ease; width: 0; }
+.leitor-ultima { background: none; border: 0; color: #b65c7d; cursor: pointer; font-size: 0.68rem; font-weight: 700; padding: 0.1rem 0.25rem; }
+.leitor-ultima:hover:not(:disabled) { color: #633246; text-decoration: underline; }
+.leitor-ultima:disabled { cursor: default; opacity: 0.35; }
+@media (max-width: 600px) {
+  .cartas-leitor-controles { border-radius: 22px; gap: 0.45rem; padding: 0.55rem; }
+  .cartas-leitor-controles .carta-navegacao { min-width: 0; padding: 0.78rem 0.65rem; }
+  .cartas-leitor-controles .carta-navegacao span:not(.leitor-seta) { display: none; }
+  .leitor-status { min-width: 92px; }
+}
+@keyframes cartaLeitorEntrada { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
 * {
   box-sizing: border-box;
 }
@@ -661,6 +739,14 @@ h1 {
 .music-toggle.muted {
   background: rgba(255, 255, 255, 0.65);
   color: #8e7280;
+}
+
+@media (max-width: 600px) {
+  .cartas-leitor-controles { margin-left: auto; margin-right: auto; width: min(100%, 360px); }
+  .hero-collage { margin-left: auto; margin-right: auto; min-height: 430px; transform: translateX(0); }
+  .hero-collage .photo-1 { left: 8%; width: 58%; z-index: 3; }
+  .hero-collage .photo-2 { right: 5%; top: 92px; width: 45%; z-index: 2; }
+  .hero-collage .photo-3 { bottom: 18px; left: 25%; width: 52%; z-index: 4; }
 }
 
 @media (max-width: 768px) {
@@ -1572,4 +1658,200 @@ h1 {
   .ceu-header p {
     font-size: 0.95rem;
   }
+}
+
+@media (max-width: 420px) {
+  .cartas-leitor-controles { margin-left: auto; margin-right: auto; width: calc(100% - 8px); }
+  .hero-collage .photo-1 { left: 8%; width: 58%; }
+  .hero-collage .photo-2 { right: 5%; top: 92px; width: 45%; }
+  .hero-collage .photo-3 { bottom: 18px; left: 25%; width: 52%; }
+}
+
+@media (min-width: 601px) {
+  .cartas-leitor-controles .carta-navegacao {
+    min-width: 150px;
+    width: auto;
+    padding: 0.8rem 1rem;
+    overflow: visible;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+  }
+  .cartas-leitor-controles .leitor-seta { display: inline !important; }
+}
+
+.cartas-leitor-controles .leitor-seta {
+  display: inline-block !important;
+  font-size: 1.2rem;
+  line-height: 1;
+  opacity: 1;
+}
+
+@media (min-width: 601px) {
+  .cartas-leitor-controles { max-width: 760px; width: 100%; }
+  .cartas-leitor-controles .carta-navegacao {
+    flex: 0 0 auto !important;
+    min-width: 150px !important;
+    width: auto !important;
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 600px) {
+  .cartas-leitor-controles .leitor-anterior,
+  .cartas-leitor-controles .leitor-proxima {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 48px;
+    height: 48px;
+    justify-content: center;
+    min-width: 48px;
+    overflow: hidden;
+    padding: 0;
+    width: 48px;
+  }
+  .cartas-leitor-controles .leitor-label,
+  .cartas-leitor-controles .leitor-proximo-texto { display: none !important; }
+  .cartas-leitor-controles .leitor-proxima.leitor-no-fim {
+    flex-basis: auto;
+    padding: 0 0.85rem;
+    width: auto;
+  }
+  .cartas-leitor-controles .leitor-proxima.leitor-no-fim .leitor-proximo-texto { display: inline !important; }
+  .cartas-leitor-controles .leitor-proxima.leitor-no-fim .leitor-seta { display: none !important; }
+}
+
+@media (min-width: 601px) {
+  .hero-collage.buque.expanded .photo-card:nth-of-type(1) { transform: translateX(-285px) rotate(-72deg) translateY(-18px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(2) { transform: translateX(-190px) rotate(-48deg) translateY(-24px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(3) { transform: translateX(-95px) rotate(-24deg) translateY(-28px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(4) { transform: translateX(0) rotate(0deg) translateY(-30px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(5) { transform: translateX(95px) rotate(24deg) translateY(-28px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(6) { transform: translateX(190px) rotate(48deg) translateY(-24px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(7) { transform: translateX(285px) rotate(72deg) translateY(-18px); }
+}
+
+/* Buquê do Hero */
+.hero-collage.buque {
+  position: relative;
+  min-height: 620px;
+  display: block;
+  cursor: pointer;
+  isolation: isolate;
+}
+.hero-collage.buque .photo-card {
+  position: absolute;
+  bottom: 26px;
+  left: 50%;
+  width: min(190px, 40vw);
+  height: 270px;
+  margin-left: calc(min(190px, 40vw) / -2);
+  padding: 10px;
+  background: var(--card);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+  transform-origin: 50% 100%;
+  transform: rotate(var(--angle-closed, 0deg)) translateY(0);
+  transition: transform 0.85s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s ease;
+  opacity: 0;
+  animation: buqueSurge 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: calc(var(--i, 0) * 0.09s);
+  z-index: calc(10 - var(--i, 0));
+}
+.hero-collage.buque .photo-card img,
+.hero-collage.buque .photo-card video {
+  width: 100%; height: 100%; object-fit: cover; border-radius: 18px; display: block;
+}
+@keyframes buqueSurge {
+  from { opacity: 0; transform: rotate(var(--angle-closed, 0deg)) translateY(70px) scale(0.6); }
+  to { opacity: 1; transform: rotate(var(--angle-closed, 0deg)) translateY(0) scale(1); }
+}
+.hero-collage.buque .photo-card:hover { box-shadow: 0 26px 48px rgba(184, 102, 131, 0.24); }
+.hero-collage.buque.expanded .photo-card { transform: rotate(var(--angle-open, 0deg)) translateY(-26px); transition-delay: calc(var(--i, 0) * 0.05s); }
+.hero-collage.buque.expanded .photo-card:hover { transform: rotate(var(--angle-open, 0deg)) translateY(-40px) scale(1.05); }
+.hero-collage.buque .glow { inset: auto 10% 0 10%; height: 60%; }
+.hero-collage.buque .collage-tip { bottom: -30px; }
+@media (max-width: 600px) {
+  .hero-collage.buque { min-height: 400px; }
+  .hero-collage.buque .photo-card { width: min(130px, 34vw); height: 190px; margin-left: calc(min(130px, 34vw) / -2); bottom: 30px; }
+  .hero-collage.buque.expanded .photo-card { transform: rotate(var(--angle-open, 0deg)) translateY(-16px); }
+}
+
+/* Buquê fotográfico no Hero */
+@media (max-width: 600px) {
+  .hero-collage { height: 440px !important; min-height: 440px !important; }
+  .hero-collage .photo-card { position: absolute !important; }
+  .hero-collage .photo-1 { left: 7% !important; top: 18px !important; width: 58% !important; transform: rotate(-9deg) !important; z-index: 3; }
+  .hero-collage .photo-2 { right: 4% !important; top: 72px !important; width: 47% !important; transform: rotate(10deg) !important; z-index: 2; }
+  .hero-collage .photo-3 { bottom: 12px !important; left: 24% !important; width: 54% !important; transform: rotate(3deg) !important; z-index: 4; }
+}
+
+/* Navegação reduzida e composição de fotos em formato de buquê */
+.cartas-leitor-controles .carta-navegacao {
+  min-width: 52px;
+  width: 52px;
+  padding: 0.85rem;
+}
+.cartas-leitor-controles .leitor-proxima.leitor-no-fim {
+  white-space: nowrap;
+}
+.hero-collage::before,
+.hero-collage::after {
+  content: "✦";
+  color: rgba(233, 122, 154, 0.28);
+  font-size: 1.4rem;
+  position: absolute;
+  animation: petalaBuque 4s ease-in-out infinite;
+}
+.hero-collage::before { left: 12%; top: 18%; }
+.hero-collage::after { right: 12%; bottom: 22%; animation-delay: 1.4s; }
+.hero-collage .photo-card { animation: fotoBuque 5s ease-in-out infinite; }
+.hero-collage .photo-2 { animation-delay: 0.8s; }
+.hero-collage .photo-3 { animation-delay: 1.5s; }
+@keyframes fotoBuque {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -7px; }
+}
+@keyframes petalaBuque {
+  0%, 100% { opacity: 0.25; transform: translateY(0) rotate(0deg); }
+  50% { opacity: 0.75; transform: translateY(-13px) rotate(18deg); }
+}
+
+/* O leque precisa controlar o transform; evita que a animação antiga do collage o sobrescreva. */
+.hero-collage.buque .photo-card {
+  animation: buqueSurge 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+.hero-collage.buque.expanded .photo-card {
+  animation: none;
+}
+.hero-collage.buque .photo-card {
+  opacity: 1;
+}
+.hero-collage.buque.expanded .photo-card:nth-of-type(2) { transform: translateX(-285px) rotate(-72deg) translateY(-18px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(3) { transform: translateX(-190px) rotate(-48deg) translateY(-24px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(4) { transform: translateX(-95px) rotate(-24deg) translateY(-28px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(5) { transform: translateX(0) rotate(0deg) translateY(-30px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(6) { transform: translateX(95px) rotate(24deg) translateY(-28px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(7) { transform: translateX(190px) rotate(48deg) translateY(-24px); }
+.hero-collage.buque.expanded .photo-card:nth-of-type(8) { transform: translateX(285px) rotate(72deg) translateY(-18px); }
+@media (max-width: 600px) {
+  .hero-collage.buque.expanded .photo-card:nth-of-type(2) { transform: translateX(-150px) rotate(-72deg) translateY(-12px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(3) { transform: translateX(-100px) rotate(-48deg) translateY(-16px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(4) { transform: translateX(-50px) rotate(-24deg) translateY(-18px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(5) { transform: translateX(0) rotate(0deg) translateY(-20px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(6) { transform: translateX(50px) rotate(24deg) translateY(-18px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(7) { transform: translateX(100px) rotate(48deg) translateY(-16px); }
+  .hero-collage.buque.expanded .photo-card:nth-of-type(8) { transform: translateX(150px) rotate(72deg) translateY(-12px); }
+}
+
+@media (max-width: 600px) {
+  .cartas-leitor-controles { justify-content: space-between; }
+  .cartas-leitor-controles .carta-navegacao { flex: 0 0 48px; min-width: 48px; width: 48px; }
+  .cartas-leitor-controles .leitor-proxima.leitor-no-fim { width: auto; }
+  .cartas-leitor-controles .leitor-label,
+  .cartas-leitor-controles .leitor-proximo-texto { display: none !important; }
+  .cartas-leitor-controles .leitor-proxima.leitor-no-fim .leitor-proximo-texto { display: inline !important; }
 }
