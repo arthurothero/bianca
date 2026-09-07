@@ -73,17 +73,32 @@ const music = document.getElementById("bgMusic");
 const toggle = document.getElementById("musicToggle");
 const btnPrev = document.getElementById("btnPrev");
 const btnNext = document.getElementById("btnNext");
+const musicTrack = document.getElementById("musicTrack");
+const musicProgress = document.getElementById("musicProgress");
 
 const playlist = ["src/musica1.mp3", "src/musica2.mp3", "src/musica3.mp3", "src/musica4.mp3"];
 
 let current = 0;
 let started = false;
-let isMuted = false;
 
-function playMusic(index) {
-  current = index % playlist.length;
+function updateMusicPlayer() {
+  const playing = started && !music.paused;
+  toggle.textContent = playing ? "⏸" : "▶";
+  toggle.setAttribute("aria-label", playing ? "Pausar música" : "Reproduzir música");
+  musicTrack.textContent = `Faixa ${current + 1} de ${playlist.length}`;
+}
+
+async function playMusic(index) {
+  current = (index + playlist.length) % playlist.length;
   music.src = playlist[current];
-  if (started) music.play();
+  music.volume = 0.3;
+  try {
+    await music.play();
+    started = true;
+  } catch {
+    started = false;
+  }
+  updateMusicPlayer();
 }
 
 music.addEventListener("ended", () => {
@@ -92,30 +107,23 @@ music.addEventListener("ended", () => {
 
 document.addEventListener(
   "click",
-  async () => {
+  async (evento) => {
+    if (evento.target.closest(".music-controls")) return;
     if (!started) {
-      music.src = playlist[current];
-      music.volume = 0.3;
-
-      try {
-        await music.play();
-        started = true;
-      } catch {
-        console.log("bloqueado autoplay");
-      }
+      await playMusic(current);
     }
   },
-  { once: true },
 );
 
 toggle.addEventListener("click", async () => {
   if (!started) {
-    await startMusic();
+    await playMusic(current);
+  } else if (music.paused) {
+    await music.play();
+  } else {
+    music.pause();
   }
-
-  isMuted = !isMuted;
-  music.muted = isMuted;
-  toggle.textContent = isMuted ? "🔇" : "🔊";
+  updateMusicPlayer();
 });
 
 btnNext.addEventListener("click", () => {
@@ -123,8 +131,17 @@ btnNext.addEventListener("click", () => {
 });
 
 btnPrev.addEventListener("click", () => {
-  playMusic(current - 1 < 0 ? playlist.length - 1 : current - 1);
+  playMusic(current - 1);
 });
+
+music.addEventListener("timeupdate", () => {
+  const progress = music.duration ? (music.currentTime / music.duration) * 100 : 0;
+  musicProgress.style.width = `${progress}%`;
+});
+
+music.addEventListener("play", updateMusicPlayer);
+music.addEventListener("pause", updateMusicPlayer);
+updateMusicPlayer();
 
 document
   .querySelectorAll(".reveal:not(.visible)")
@@ -154,7 +171,8 @@ if (cartasLeitor) {
   const cartas = [...cartasLeitor.querySelectorAll(":scope > .story-item")];
   const leitorControles = document.createElement("div");
   leitorControles.className = "cartas-leitor-controles";
-  leitorControles.innerHTML = '<button type="button" aria-label="Carta anterior" class="carta-navegacao leitor-anterior"><span class="leitor-seta">←</span><span class="leitor-label">Carta anterior</span></button><div class="leitor-status"><span class="leitor-kicker">LEITURA</span><span class="carta-pagina-indicador leitor-indicador"></span><span class="leitor-progresso"><i></i></span><button type="button" class="leitor-ultima">Ir para a última</button></div><button type="button" aria-label="Próxima carta" class="carta-navegacao leitor-proxima"><span class="leitor-proximo-texto">Próxima carta</span><span class="leitor-seta">→</span></button>';
+  leitorControles.setAttribute("aria-label", "Navegação entre as cartas");
+  leitorControles.innerHTML = '<button type="button" aria-label="Carta anterior" class="carta-navegacao leitor-anterior"><span class="leitor-seta" aria-hidden="true">←</span><span class="leitor-label">Carta anterior</span></button><div class="leitor-status"><span class="leitor-kicker">NOSSA HISTÓRIA</span><span class="carta-pagina-indicador leitor-indicador" aria-live="polite"></span><span class="leitor-progresso" aria-hidden="true"><i></i></span><button type="button" class="leitor-ultima">Ir para a última</button></div><button type="button" aria-label="Próxima carta" class="carta-navegacao leitor-proxima"><span class="leitor-proximo-texto">Próxima carta</span><span class="leitor-seta" aria-hidden="true">→</span></button>';
   cartasLeitor.parentElement.insertBefore(leitorControles, cartasLeitor);
   let cartaAtual = 0;
   const leitorAnterior = leitorControles.querySelector(".leitor-anterior");
@@ -176,6 +194,16 @@ if (cartasLeitor) {
     else { cartaAtual = 0; atualizarLeitor(); cartasLeitor.parentElement.scrollIntoView({ behavior: "smooth" }); }
   });
   leitorUltima.addEventListener("click", () => { cartaAtual = cartas.length - 1; atualizarLeitor(); });
+  leitorControles.addEventListener("keydown", (evento) => {
+    if (evento.key === "ArrowLeft" && cartaAtual > 0) {
+      cartaAtual--;
+      atualizarLeitor();
+    }
+    if (evento.key === "ArrowRight") {
+      cartaAtual = cartaAtual < cartas.length - 1 ? cartaAtual + 1 : 0;
+      atualizarLeitor();
+    }
+  });
   atualizarLeitor();
 }
 
@@ -452,3 +480,36 @@ async function manterSupabaseAtivo() {
 manterSupabaseAtivo();
 
 setInterval(manterSupabaseAtivo, 1000 * 60 * 60 * 24);
+
+document.querySelectorAll("[data-carousel]").forEach((carousel) => {
+  const slides = [...carousel.querySelectorAll(".carousel-slide")];
+  const previous = carousel.querySelector(".carousel-prev");
+  const next = carousel.querySelector(".carousel-next");
+  const dots = carousel.querySelector(".carousel-dots");
+  let currentSlide = 0;
+
+  if (slides.length < 2) carousel.classList.add("is-single");
+
+  const showSlide = (index) => {
+    currentSlide = (index + slides.length) % slides.length;
+    slides.forEach((slide, slideIndex) => {
+      slide.classList.toggle("is-active", slideIndex === currentSlide);
+    });
+    [...dots.children].forEach((dot, dotIndex) => {
+      dot.classList.toggle("is-active", dotIndex === currentSlide);
+    });
+  };
+
+  slides.forEach((_, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "carousel-dot";
+    dot.setAttribute("aria-label", `Ver foto ${index + 1}`);
+    dot.addEventListener("click", () => showSlide(index));
+    dots.appendChild(dot);
+  });
+
+  previous.addEventListener("click", () => showSlide(currentSlide - 1));
+  next.addEventListener("click", () => showSlide(currentSlide + 1));
+  showSlide(0);
+});
