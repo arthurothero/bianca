@@ -76,7 +76,7 @@ const btnNext = document.getElementById("btnNext");
 const musicTrack = document.getElementById("musicTrack");
 const musicProgress = document.getElementById("musicProgress");
 
-const playlist = ["src/musica1.mp3", "src/musica2.mp3", "src/musica3.mp3", "src/musica4.mp3"];
+const playlist = ["src/musica5.mp3", "src/musica2.mp3", "src/musica3.mp3", "src/musica4.mp3", "src/musica1.mp3"];
 
 let current = 0;
 let started = false;
